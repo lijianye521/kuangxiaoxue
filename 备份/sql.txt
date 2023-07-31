@@ -1,0 +1,90 @@
+
+CREATE TABLE `tasks` (
+  `task_id` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `description` text,
+  `status` varchar(20) NOT NULL DEFAULT '未开始',
+  `assigned_to` varchar(10) DEFAULT NULL,
+  `created_by` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 转存表中的数据 `tasks`
+--
+
+
+--
+-- 表的结构 `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `student_id` varchar(10) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `gender` enum('男','女') NOT NULL,
+  `province` varchar(50) DEFAULT NULL,
+  `political_status` varchar(50) DEFAULT NULL,
+  `ethnicity` varchar(50) DEFAULT NULL,
+  `dormitory` varchar(10) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 转存表中的数据 `user`
+--
+
+-- 转储表的索引
+--
+
+--
+-- 表的索引 `files`
+--
+ALTER TABLE `files`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `task_id` (`task_id`);
+
+--
+-- 表的索引 `tasks`
+--
+ALTER TABLE `tasks`
+  ADD PRIMARY KEY (`task_id`);
+
+--
+-- 表的索引 `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 在导出的表使用AUTO_INCREMENT
+--
+
+--
+-- 使用表AUTO_INCREMENT `files`
+--
+ALTER TABLE `files`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+
+--
+-- 使用表AUTO_INCREMENT `tasks`
+--
+ALTER TABLE `tasks`
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- 使用表AUTO_INCREMENT `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- 限制导出的表
+--
+
+--
+-- 限制表 `files`
+--
+ALTER TABLE `files`
+  ADD CONSTRAINT `fk_files_tasks` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`) ON DELETE CASCADE;
+COMMIT;
